@@ -63,6 +63,13 @@
       "firstName": "Vi",
       "lastName": "Dieu",
       "id": 13
+    },
+    {
+      "email": "dtran123@gmail.com",
+      "password": "$2a$10$P/mcyHQTDicg1ECzrHH98.b3sfVtzPPdBiHTZ0HuissqdI4BYoM7e",
+      "firstName": "Anh",
+      "lastName": "Tran",
+      "id": 14
     }
   ],
   "cargotypes": [

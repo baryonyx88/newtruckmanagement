@@ -15,7 +15,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {signInRequest} from '../../actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
  
@@ -53,17 +52,9 @@ export default function SignIn() {
 
   useEffect(() => {
     if (signInResult.signInSuccess) {
-      toast.success('Dang nhap thanh cong', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+     
       navigate('/usermanagement')
-      window.location.href('/usermanagement')
+      // window.location.href('/usermanagement')
     }
     
   }, [signInResult.signInSuccess])

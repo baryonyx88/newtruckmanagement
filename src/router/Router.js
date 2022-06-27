@@ -9,20 +9,19 @@ import UserManagement from '../pages/usermanagement/UserManagement';
 import Profile from '../pages/profile/Profile';
 import Layout from '../layouts/Layout';
 import { useSelector } from 'react-redux';
-import { RequireAuth } from '../components/RequireAuth';
+// import { RequireAuth } from '../components/RequireAuth';
 
 const Router = () => {
     const signInResult = useSelector((state) => state.auth)
-    const userData = JSON.parse(localStorage.getItem('userData'))
-    // console.log(userData)
+    const userData = localStorage.getItem('userData') === undefined ? null : JSON.parse(localStorage.getItem('userData'))
     return (
         (signInResult.signInSuccess || userData) ?
             <Layout>
                 <Routes>
-                    {/* <Route
+                    <Route
                         path="/"
-                        element={<Navigate to="usermanagement" replace />}
-                    /> */}
+                        element={<Home/>}
+                    />
                     <Route path="cargotype" element={<CargoTypeMaster />} />
                     <Route path="vehicleinfo" element={<VehicleInfo />} />
                     <Route path="usermanagement" element={<UserManagement />} />
@@ -30,10 +29,10 @@ const Router = () => {
                 </Routes>
             </Layout> :
             <Routes>
-                {/* <Route
+                <Route
                     path="/"
                     element={<Navigate to="signin" replace />}
-                /> */}
+                />
                 <Route path="signup" element={<SignUp />} />
                 <Route path="signin" element={<SignIn />} />
             </Routes>
