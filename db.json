@@ -1,0 +1,175 @@
+{
+  "users": [
+    {
+      "id": 3,
+      "lastName": "Gangster",
+      "firstName": "Nicky",
+      "email": "lanjai123@yomail.com",
+      "password": "$2a$10$84CKe/WJ3jJrY24FDvog5uuKT2rs.VUvD549DdF1lWNenAy07UG0m"
+    },
+    {
+      "email": "vyanh1234@gmail.com",
+      "password": "$2a$10$UlqhN5oyRCpu/7wnBvc8XeYh8U/aaFLY9fkzM9/RL7.0ajex16fAq",
+      "firstName": "Vy",
+      "lastName": "Anh",
+      "id": 4
+    },
+    {
+      "email": "haianh1234@gmail.com",
+      "password": "$2a$10$tuJI5NL46D93C9la4xl6fuscwR/H2dB981.Ts7CbwhxEbFJUcz2ma",
+      "firstName": "Hai",
+      "lastName": "Anh",
+      "id": 5
+    },
+    {
+      "email": "vananh1234@gmail.com",
+      "password": "$2a$10$8FYJXwVrutHDap4gnp6UXuiXM9rK5tcvVocfFNYbaVTWfi6Oyqx3q",
+      "firstName": "Van",
+      "lastName": "Anh",
+      "id": 6
+    },
+    {
+      "email": "hay123@gmail.com",
+      "password": "$2a$10$aZff12Vd4ltoTdVMDVv.be8XkXsCD8dIRWqd9yhSWCYWNnmIg4Veq",
+      "firstName": "Hay",
+      "lastName": "The",
+      "id": 7
+    },
+    {
+      "email": "muoi18@gmail.com",
+      "password": "$2a$10$vQ3V4YLX6a0hOke8eysv1O2QBKti9iEXDbSftyOxxdBTV0H9GzXAm",
+      "firstName": "Muoi",
+      "lastName": "Tam",
+      "id": 8
+    },
+    {
+      "email": "ngon3565@gmail.com",
+      "password": "$2a$10$t0KINEAV.2m1mopWElXWR.jiugYqi2kDCDpARVAuoGnpuCENwXVAC",
+      "firstName": "Ngon",
+      "lastName": "An",
+      "id": 9
+    },
+    {
+      "userId": 12,
+      "firstName": "Van Anh",
+      "lastName": "Duc Tran",
+      "email": "dtran3565@gmail.com",
+      "password": "$2a$10$Peq.yckF5lBvsbbmDe9QFe4IrKWPy0W4OsY1/kqOjObJ2zddfAQ8y",
+      "id": 12
+    },
+    {
+      "email": "vidieu3565@gmail.com",
+      "password": "$2a$10$4xYnvbhFHPfJEbIadOaLNuzFgkNAdfjOFFB/ORPtIxvF0iGnqp6OS",
+      "firstName": "Vi",
+      "lastName": "Dieu",
+      "id": 13
+    }
+  ],
+  "cargotypes": [
+    {
+      "id": 1,
+      "cargoName": "Computer"
+    },
+    {
+      "id": 2,
+      "cargoName": "Electronics"
+    },
+    {
+      "id": 3,
+      "cargoName": "Vegetables"
+    },
+    {
+      "cargoName": "Books",
+      "id": 5
+    },
+    {
+      "cargoName": "Chicken",
+      "id": 6
+    }
+  ],
+  "vehicleinfos": [
+    {
+      "id": 1,
+      "truckPlate": "30A-50493",
+      "cargoType": [
+        "Computer",
+        "Electronics"
+      ],
+      "driver": "Nguyễn Văn A",
+      "truckType": "5 tons",
+      "price": "1000000000",
+      "dimension": "10-2-1.5",
+      "parking": "No.128 Hoàn Kiếm, HN",
+      "production": "2010",
+      "status": "In-used",
+      "desc": ""
+    },
+    {
+      "vehicleId": 2,
+      "truckPlate": "30X-12345",
+      "cargoType": [
+        "Computer",
+        "Vegetables"
+      ],
+      "driver": "Vy Anh",
+      "truckType": "10 tons",
+      "price": "12345",
+      "dimension": "alc dkcldsc",
+      "parking": "sdkajcnads",
+      "production": "2013",
+      "status": "New",
+      "desc": "asdcadcas",
+      "id": 2
+    },
+    {
+      "vehicleId": 3,
+      "truckPlate": "30X-43213",
+      "cargoType": [
+        "Electronics",
+        "Books"
+      ],
+      "driver": "Muoi Tam",
+      "truckType": "6 tons",
+      "price": "1234567",
+      "dimension": "alc dkcldsc",
+      "parking": "sdkajcnads",
+      "production": "2013",
+      "status": "In-used",
+      "desc": "",
+      "id": 3
+    },
+    {
+      "vehicleId": 4,
+      "truckPlate": "30X-12345",
+      "cargoType": [
+        "Computer",
+        "Vegetables"
+      ],
+      "driver": "Van Anh Duc Tran",
+      "truckType": "100 tons",
+      "price": "10000000000",
+      "dimension": "alc dkcldsc",
+      "parking": "sdkajcnads",
+      "production": "2013",
+      "status": "In-used",
+      "desc": "asdcadcas",
+      "id": 4
+    },
+    {
+      "truckPlate": "30X-12345",
+      "cargoType": [
+        "Computer",
+        "Vegetables"
+      ],
+      "driver": "Nicky Gangster",
+      "truckType": "Tran",
+      "price": "123456",
+      "dimension": "cnkajdncjkajsd",
+      "parking": "sdkajcnads",
+      "production": "2013",
+      "status": "In-used",
+      "desc": "asdcadcas",
+      "id": 5
+    }
+  ]
+}
