@@ -124,7 +124,7 @@ const VehicleInfo = () => {
                 <DataGrid
                     rows={data ? data : []}
                     columns={columns}
-                    pageSize={5}
+                    pageSize={7}
                     rowsPerPageOptions={[5]}
                     getRowHeight={() => 'auto'}
                 />

@@ -13,10 +13,19 @@ import { createVehicleInfoRequest } from '../../actions/vehicleinfo';
 import { getUsersRequest } from '../../actions/users';
 import { getCargoTypesRequest } from '../../actions/cargotypes';
 import { useDispatch, useSelector } from 'react-redux';
-import MenuItem from "@mui/material/MenuItem";
-import Select from "react-select";
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 const style = {
     position: 'absolute',
@@ -30,32 +39,47 @@ const style = {
     p: 4,
 };
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP
+            // width: 250,
+        },
+    },
+};
+
+function getStyles(name, cargoName, theme) {
+    return {
+        fontWeight:
+            cargoName.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
+
 const VehicleCreatingModal = ({ open, handleClose }) => {
 
     const [cargoData, setCargoData] = useState([])
     const [usersData, setUsersData] = useState([])
     const cargotypes = useSelector((state) => state.cargotypes);
-
     const users = useSelector((state) => state.users);
+
+    const theme = useTheme();
 
     const validationSchema = yup.object({
         truckplate: yup
             .string('Enter your truck plate')
             .required('Truck plate is required')
-            .matches('^[0-9]{2}[A-Z]{1}-[0-9]{5}$', 'Please enter truck plates'),
-        cargotype: yup.array()
-            .max(10, "Pick at least 3 tags")
-            .of(
-                yup.object().shape({
-                    label: yup.string().required(),
-                    value: yup.string().required()
-                })
-            ),
+            .matches('^[0-9]{2}[A-Z]{1}-[0-9]{4,5}$', 'Please enter truck plates(example: 00X-00000)'),
         trucktype: yup
             .string('Enter your truck type')
-            .required('Truck type is required'),
+            .required('Truck type is required')
+            .matches('^[a-zA-Z]+$', 'You must enter only text'),
         price: yup
-            .number('Enter your price')
+            .number()
+            .typeError('You must enter number')
             .required('Price is required'),
         dimension: yup
             .string('Enter your dimension')
@@ -65,10 +89,9 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
             .required('Parking address is required'),
         productionyear: yup
             .string('Enter your production year')
-            .required('Production year is required')
-            .matches('^[0-9]{4}$', 'Please enter year'),
+            .required('Production year is required'),
         description: yup
-            .string('Enter your description')
+            .string('Enter your dimension'),
     });
 
     const dispatch = useDispatch()
@@ -85,7 +108,6 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
     useEffect(() => {
         setCargoData(cargotypes.items.items)
     }, [cargotypes])
-
 
     const options = cargoData ? cargoData.map((item) => {
         return { value: item.cargoName, label: item.cargoName }
@@ -105,23 +127,45 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
             description: ''
         },
         validationSchema: validationSchema,
+        enableReinitialize: true,
         onSubmit: (values) => {
+            const productionyear = values.productionyear.getFullYear()
             console.log(values)
             dispatch(createVehicleInfoRequest({
                 truckplate: values.truckplate,
-                cargotype: values.cargotype.map(item => item.value),
+                cargotype: values.cargotype,
                 trucktype: values.trucktype,
                 price: values.price,
                 driver: values.driver,
                 dimension: values.dimension,
                 parkingaddress: values.parkingaddress,
-                productionyear: values.productionyear,
+                productionyear: productionyear.toString(),
                 status: values.status,
                 description: values.description
             }))
             handleClose()
         },
     });
+
+    const [cargoName, setCargoName] = useState([]);
+    const handleMultipleSelectChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+
+        // console.log(event)
+
+        setCargoName(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+
+        formik.setFieldValue('cargotype', value)
+    };
+
+    const handleDatePickerChange = (event) => {
+        formik.setFieldValue('productionyear', event)
+    };
 
     return (
         <Modal
@@ -138,7 +182,7 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
             <Fade in={open}>
                 <Box sx={style}>
                     <Typography component="h1" variant="h5">
-                        Create new vehicle information
+                        Create vehicle information
                     </Typography>
                     <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
@@ -158,19 +202,43 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <Select
-                                    id="color"
-                                    options={options}
-                                    isMulti
-                                    onChange={option => formik.setFieldValue('cargotype', option)}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.cargotype}
-                                />
-                                {!!formik.errors.cargotype && formik.touched.cargotype && (
-                                    <div style={{ color: "red", marginTop: ".5rem" }}>
-                                        {formik.errors.cargotype}
-                                    </div>
-                                )}
+                                <FormControl sx={{ width: '100%' }}>
+                                    <InputLabel id="demo-multiple-name-label">Cargo Types</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={cargoName}
+                                        onChange={handleMultipleSelectChange}
+                                        input={<OutlinedInput label="Cargo Types" />}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                {selected.map((value) => (
+                                                    <Chip key={value} label={value} />
+                                                ))}
+                                            </Box>
+                                        )}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {options.map((item) => (
+                                            <MenuItem
+                                                key={item.value}
+                                                value={item.value}
+                                                style={getStyles(item.value, cargoName, theme)}
+                                            >
+                                                <Checkbox checked={cargoName.indexOf(item.value) > -1} />
+                                                <ListItemText primary={item.label} />
+                                            </MenuItem>
+                                        ))}
+                                        {/* <MenuItem
+                                            key={'Haha'}
+                                            value={'Haha'}
+                                        //   style={getStyles(, personName, theme)}
+                                        >
+                                            Haha
+                                        </MenuItem> */}
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -200,7 +268,7 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                     helperText={formik.touched.price && formik.errors.price}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -232,21 +300,6 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                 <TextField
                                     required
                                     fullWidth
-                                    name="dimension"
-                                    label="Dimension"
-                                    type="dimension"
-                                    id="dimension"
-                                    // autoComplete="new-dimension"
-                                    value={formik.values.dimension}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.dimension && Boolean(formik.errors.dimension)}
-                                    helperText={formik.touched.dimension && formik.errors.dimension}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    required
-                                    fullWidth
                                     select
                                     name="status"
                                     id="status"
@@ -269,7 +322,7 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                 </TextField>
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <TextField
+                                {/* <TextField
                                     required
                                     fullWidth
                                     name="productionyear"
@@ -281,16 +334,42 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                     onChange={formik.handleChange}
                                     error={formik.touched.productionyear && Boolean(formik.errors.productionyear)}
                                     helperText={formik.touched.productionyear && formik.errors.productionyear}
+                                /> */}
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
+                                        inputFormat="yyyy"
+                                        views={['year']}
+                                        label="Production Year"
+                                        value={formik.values.productionyear}
+                                        onChange={handleDatePickerChange}
+                                        renderInput={(params) => <TextField {...params}
+                                            error={formik.touched.productionyear && Boolean(formik.errors.productionyear)}
+                                            helperText={formik.touched.productionyear && formik.errors.productionyear}
+                                        />}
+                                    />
+                                </LocalizationProvider>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="dimension"
+                                    label="Dimension"
+                                    type="dimension"
+                                    id="dimension"
+                                    // autoComplete="new-dimension"
+                                    value={formik.values.dimension}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.dimension && Boolean(formik.errors.dimension)}
+                                    helperText={formik.touched.dimension && formik.errors.dimension}
                                 />
                             </Grid>
-                            
                             <Grid item xs={12}>
-                                <InputLabel>Parking Address</InputLabel>
-                                <TextareaAutosize
-                                    style={{ width: '100%', height: '60px' }}
+                                <TextField
                                     required
                                     fullWidth
                                     name="parkingaddress"
+                                    label="Parking Address"
                                     type="parkingaddress"
                                     id="parkingaddress"
                                     // autoComplete="new-parkingaddress"
@@ -301,10 +380,10 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <InputLabel>Description</InputLabel>
-                                <TextareaAutosize
-                                    style={{ width: '100%', height: '100px' }}
+                                <TextField
+                                    fullWidth
                                     name="description"
+                                    label="Description"
                                     type="description"
                                     id="description"
                                     // autoComplete="new-description"

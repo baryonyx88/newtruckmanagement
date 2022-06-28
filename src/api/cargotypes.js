@@ -5,7 +5,7 @@ export const getCargoType = () => {
 }
 
 export const createCargoType = (body) => {
-    axios.post('/cargotypes', body).then((res) => {
+    return axios.post('/cargotypes', body).then((res) => {
         console.log(res)
     }).catch((error) => {
         console.log(error)

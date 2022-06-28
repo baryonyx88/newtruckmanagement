@@ -29,10 +29,12 @@ const UserCreatingModal = ({ open, handleClose }) => {
     const validationSchema = yup.object({
         firstName: yup
             .string('Enter your first name')
-            .required('First name is required'),
+            .required('First name is required')
+            .matches('^[a-zA-Z]+$', 'You must enter only text'),
         lastName: yup
             .string('Enter your last name')
-            .required('Last name is required'),
+            .required('Last name is required')
+            .matches('^[a-zA-Z]+$', 'You must enter only text'),
         email: yup
             .string('Enter your email')
             .required('Email is required')
@@ -85,13 +87,14 @@ const UserCreatingModal = ({ open, handleClose }) => {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    autoComplete="given-name"
+                                    autoComplete="firstName"
                                     name="firstName"
                                     required
                                     fullWidth
                                     id="firstName"
                                     label="First Name"
                                     value={formik.values.firstName}
+                                    // onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     autoFocus
                                     error={formik.touched.firstName && Boolean(formik.errors.firstName)}
@@ -105,8 +108,9 @@ const UserCreatingModal = ({ open, handleClose }) => {
                                     id="lastName"
                                     label="Last Name"
                                     name="lastName"
-                                    autoComplete="family-name"
+                                    autoComplete="lastName"
                                     value={formik.values.lastName}
+                                    // onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     error={formik.touched.lastName && Boolean(formik.errors.lastName)}
                                     helperText={formik.touched.lastName && formik.errors.lastName}
@@ -121,6 +125,7 @@ const UserCreatingModal = ({ open, handleClose }) => {
                                     name="email"
                                     autoComplete="email"
                                     value={formik.values.email}
+                                    // onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     error={formik.touched.email && Boolean(formik.errors.email)}
                                     helperText={formik.touched.email && formik.errors.email}
@@ -136,6 +141,7 @@ const UserCreatingModal = ({ open, handleClose }) => {
                                     id="password"
                                     autoComplete="new-password"
                                     value={formik.values.password}
+                                    // onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     error={formik.touched.password && Boolean(formik.errors.password)}
                                     helperText={formik.touched.password && formik.errors.password}

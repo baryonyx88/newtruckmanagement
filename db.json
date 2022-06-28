@@ -58,15 +58,15 @@
       "id": 12
     },
     {
-      "email": "vidieu3565@gmail.com",
-      "password": "$2a$10$4xYnvbhFHPfJEbIadOaLNuzFgkNAdfjOFFB/ORPtIxvF0iGnqp6OS",
-      "firstName": "Vi",
-      "lastName": "Dieu",
+      "email": "dtran123@gmail.com",
+      "password": "$2a$10$7J5QlAsAqDdMbEFN38VNceAkU.3BrNEBdfkBLPPLBwZH5zhppYqzK",
+      "firstName": "Anh",
+      "lastName": "Tran",
       "id": 13
     },
     {
-      "email": "dtran123@gmail.com",
-      "password": "$2a$10$P/mcyHQTDicg1ECzrHH98.b3sfVtzPPdBiHTZ0HuissqdI4BYoM7e",
+      "email": "dtran123456@gmail.com",
+      "password": "$2a$10$gOTHVTYYWd1C1KviRJx9a.YTHjCShZ3we8rJWpP7D0MYaKGHpwUIe",
       "firstName": "Anh",
       "lastName": "Tran",
       "id": 14
@@ -92,25 +92,25 @@
     {
       "cargoName": "Chicken",
       "id": 6
+    },
+    {
+      "cargoName": "mm",
+      "id": 7
+    },
+    {
+      "cargoName": "ma",
+      "id": 8
+    },
+    {
+      "cargoName": "Fish",
+      "id": 9
+    },
+    {
+      "cargoName": "Dog",
+      "id": 10
     }
   ],
   "vehicleinfos": [
-    {
-      "id": 1,
-      "truckPlate": "30A-50493",
-      "cargoType": [
-        "Computer",
-        "Electronics"
-      ],
-      "driver": "Nguyễn Văn A",
-      "truckType": "5 tons",
-      "price": "1000000000",
-      "dimension": "10-2-1.5",
-      "parking": "No.128 Hoàn Kiếm, HN",
-      "production": "2010",
-      "status": "In-used",
-      "desc": ""
-    },
     {
       "vehicleId": 2,
       "truckPlate": "30X-12345",
@@ -123,7 +123,7 @@
       "price": "12345",
       "dimension": "alc dkcldsc",
       "parking": "sdkajcnads",
-      "production": "2013",
+      "production": "2022",
       "status": "New",
       "desc": "asdcadcas",
       "id": 2
@@ -163,20 +163,37 @@
       "id": 4
     },
     {
+      "vehicleId": 6,
       "truckPlate": "30X-12345",
       "cargoType": [
-        "Computer",
-        "Vegetables"
+        "Computer"
       ],
       "driver": "Nicky Gangster",
       "truckType": "Tran",
       "price": "123456",
       "dimension": "cnkajdncjkajsd",
       "parking": "sdkajcnads",
-      "production": "2013",
-      "status": "In-used",
+      "production": "2022",
+      "status": "New",
       "desc": "asdcadcas",
-      "id": 5
+      "id": 6
+    },
+    {
+      "vehicleId": 7,
+      "truckPlate": "30X-12345",
+      "cargoType": [
+        "Computer",
+        "Electronics"
+      ],
+      "driver": "Hai Anh",
+      "truckType": "5 tons",
+      "price": "1234567",
+      "dimension": "alc dkcldsc",
+      "parking": "sdkajcnads",
+      "production": "2026",
+      "status": "New",
+      "desc": "asdcadcas",
+      "id": 7
     }
   ]
 }

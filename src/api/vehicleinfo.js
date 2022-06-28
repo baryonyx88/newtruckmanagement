@@ -6,7 +6,7 @@ export const getVehicleInfo = () => {
 
 export const createVehicleInfo = (body) => {
     console.log(body)
-    axios.post('/vehicleinfos', body).then((res) => {
+    return axios.post('/vehicleinfos', body).then((res) => {
         console.log(res)
     }).catch((error) => {
         console.log(error)

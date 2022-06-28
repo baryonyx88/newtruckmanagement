@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const getUser = () => {
     return axios.get('/users')
@@ -14,6 +15,15 @@ export const createUser = (body) => {
         console.log(res)
     }).catch((error) => {
         console.log(error)
+        toast.error(error.response.data, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     })
 }
 

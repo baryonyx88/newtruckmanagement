@@ -13,8 +13,18 @@ import { editVehicleInfoRequest } from '../../actions/vehicleinfo';
 import { getUsersRequest } from '../../actions/users';
 import { getCargoTypesRequest } from '../../actions/cargotypes';
 import { useDispatch, useSelector } from 'react-redux';
-import MenuItem from "@mui/material/MenuItem";
-import Select from "react-select";
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const style = {
     position: 'absolute',
@@ -28,6 +38,26 @@ const style = {
     p: 4,
 };
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP
+            // width: 250,
+        },
+    },
+};
+
+function getStyles(name, cargoName, theme) {
+    return {
+        fontWeight:
+            cargoName.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
+
 const VehicleEditingModal = ({ open, handleClose, data }) => {
 
     const [cargoData, setCargoData] = useState([])
@@ -35,16 +65,20 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
     const cargotypes = useSelector((state) => state.cargotypes);
     const users = useSelector((state) => state.users);
 
+    const theme = useTheme();
+
     const validationSchema = yup.object({
         truckplate: yup
             .string('Enter your truck plate')
             .required('Truck plate is required')
-            .matches('^[0-9]{2}[A-Z]{1}-[0-9]{5}$', 'Please enter truck plates'),
+            .matches('^[0-9]{2}[A-Z]{1}-[0-9]{5}$', 'Please enter truck plates(example: 00X-00000)'),
         trucktype: yup
             .string('Enter your truck type')
-            .required('Truck type is required'),
+            .required('Truck type is required')
+            .matches('^[a-zA-Z]+$', 'You must enter only text'),
         price: yup
-            .number('Enter your price')
+            .number()
+            .typeError('You must enter number')
             .required('Price is required'),
         dimension: yup
             .string('Enter your dimension')
@@ -54,8 +88,7 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
             .required('Parking address is required'),
         productionyear: yup
             .string('Enter your production year')
-            .required('Production year is required')
-            .matches('^[0-9]{4}$', 'Please enter year'),
+            .required('Production year is required'),
         description: yup
             .string('Enter your dimension'),
     });
@@ -65,7 +98,7 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
     useEffect(() => {
         dispatch(getCargoTypesRequest())
         dispatch(getUsersRequest())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         setUsersData(users.items.items)
@@ -81,14 +114,9 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
 
     const { truckPlate, cargoType, truckType, price, driver, dimension, parking, production, status, desc, id } = data
 
-    // console.log(data.cargoType)
-    const defaultCargoTypeData = cargoType ? cargoType.map(item => {
-        // console.log(item)
-        return {
-            label: item, value: item
-        }
-    }) : []
-    // const defaultCargoTypeData = []
+    const defaultCargoTypeData = cargoType ? cargoType : []
+    const defaultDriverData = driver ? driver : []
+    const defaultStatusData = status ? status : []
 
     const formik = useFormik({
         initialValues: {
@@ -96,33 +124,50 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
             cargotype: defaultCargoTypeData,
             trucktype: truckType,
             price: price,
-            driver: driver,
+            driver: defaultDriverData,
             dimension: dimension,
             parkingaddress: parking,
             productionyear: production,
-            status: status,
+            status: defaultStatusData,
             description: desc
         },
         validationSchema: validationSchema,
         enableReinitialize: true,
         onSubmit: (values) => {
+            // console.log((values.productionyear.getFullYear()).toString())
+            const productionyear = values.productionyear.getFullYear()
             console.log(values)
             dispatch(editVehicleInfoRequest({
                 vehicleId: id,
                 truckplate: values.truckplate,
-                cargotype: values.cargotype.map(item => item.value),
+                cargotype: values.cargotype,
                 trucktype: values.trucktype,
                 price: values.price,
                 driver: values.driver,
                 dimension: values.dimension,
                 parkingaddress: values.parkingaddress,
-                productionyear: values.productionyear,
+                productionyear: productionyear.toString(),
                 status: values.status,
                 description: values.description
             }))
             handleClose()
         },
     });
+
+    const handleMultipleSelectChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+
+        formik.setFieldValue('cargotype', value)
+    };
+
+    const handleDatePickerChange = (event) => {
+        formik.setFieldValue('productionyear', event)
+    };
+
+    // console.log(defaultCargoTypeData)
+    // console.log(cargoName)
 
     return (
         <Modal
@@ -159,19 +204,43 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <Select
-                                    id="color"
-                                    options={options}
-                                    isMulti
-                                    onChange={option => formik.setFieldValue('cargotype', option)}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.cargotype}
-                                />
-                                {!!formik.errors.cargotype && formik.touched.cargotype && (
-                                    <div style={{ color: "red", marginTop: ".5rem" }}>
-                                        {formik.errors.cargotype}
-                                    </div>
-                                )}
+                                <FormControl sx={{ width: '100%' }}>
+                                    <InputLabel id="demo-multiple-name-label">Cargo Types</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-name-label"
+                                        id="demo-multiple-name"
+                                        multiple
+                                        value={formik.values.cargotype}
+                                        onChange={handleMultipleSelectChange}
+                                        input={<OutlinedInput label="Cargo Types" />}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                {selected.map((value) => (
+                                                    <Chip key={value} label={value} />
+                                                ))}
+                                            </Box>
+                                        )}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {options.map((item) => (
+                                            <MenuItem
+                                                key={item.value}
+                                                value={item.value}
+                                                style={getStyles(item.value, formik.values.cargotype, theme)}
+                                            >
+                                                <Checkbox checked={formik.values.cargotype.indexOf(item.value) > -1} />
+                                                <ListItemText primary={item.label} />
+                                            </MenuItem>
+                                        ))}
+                                        {/* <MenuItem
+                                            key={'Haha'}
+                                            value={'Haha'}
+                                        //   style={getStyles(, personName, theme)}
+                                        >
+                                            Haha
+                                        </MenuItem> */}
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -255,7 +324,7 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
                                 </TextField>
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <TextField
+                                {/* <TextField
                                     required
                                     fullWidth
                                     name="productionyear"
@@ -267,7 +336,20 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
                                     onChange={formik.handleChange}
                                     error={formik.touched.productionyear && Boolean(formik.errors.productionyear)}
                                     helperText={formik.touched.productionyear && formik.errors.productionyear}
-                                />
+                                /> */}
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
+                                        inputFormat="yyyy"
+                                        views={['year']}
+                                        label="Production Year"
+                                        value={formik.values.productionyear}
+                                        onChange={handleDatePickerChange}
+                                        renderInput={(params) => <TextField {...params} 
+                                        error = {formik.touched.productionyear && Boolean(formik.errors.productionyear)}
+                                        helperText={formik.touched.productionyear && formik.errors.productionyear}
+                                        />}
+                                    />
+                                </LocalizationProvider>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField

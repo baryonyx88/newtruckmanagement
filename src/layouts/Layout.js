@@ -104,15 +104,6 @@ export default function Layout({ children }) {
         navigate('signin')
     }
 
-    // useEffect(() => {
-    //     if (condition) {
-            
-    //     }
-    // }, [])
-    
-
-    // console.log(children)
-
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{ display: 'flex' }}>
