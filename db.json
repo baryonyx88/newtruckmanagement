@@ -58,17 +58,19 @@
       "id": 12
     },
     {
-      "email": "dtran123@gmail.com",
-      "password": "$2a$10$7J5QlAsAqDdMbEFN38VNceAkU.3BrNEBdfkBLPPLBwZH5zhppYqzK",
+      "userId": 13,
       "firstName": "Anh",
-      "lastName": "Tran",
+      "lastName": "Tran Vi",
+      "email": "dtran123@gmail.com",
+      "password": "$2a$10$p1LUSPtCJpSRQGKyyylqReb07YQ02YV3rFRlX.q1x4idFYgnHAo0m",
       "id": 13
     },
     {
-      "email": "dtran123456@gmail.com",
-      "password": "$2a$10$gOTHVTYYWd1C1KviRJx9a.YTHjCShZ3we8rJWpP7D0MYaKGHpwUIe",
+      "userId": 14,
       "firstName": "Anh",
-      "lastName": "Tran",
+      "lastName": "Tran Duc",
+      "email": "dtran123456@gmail.com",
+      "password": "$2a$10$IAHdWdsIwRHJebBx1IAWz.rsrZ2bcyp97ut8Hm/b5Fn4NYL8GQqCu",
       "id": 14
     }
   ],
@@ -90,7 +92,8 @@
       "id": 5
     },
     {
-      "cargoName": "Chicken",
+      "cargoId": 6,
+      "cargoName": "Dark Chicken",
       "id": 6
     },
     {
@@ -194,6 +197,23 @@
       "status": "New",
       "desc": "asdcadcas",
       "id": 7
+    },
+    {
+      "vehicleId": 8,
+      "truckPlate": "30X-12345",
+      "cargoType": [
+        "Electronics",
+        "Computer"
+      ],
+      "driver": "Hai Anh",
+      "truckType": "19 tons",
+      "price": "12345678",
+      "dimension": "alc dkcldsc",
+      "parking": "sdkajcnads",
+      "production": "2034",
+      "status": "New",
+      "desc": "cdslamcas",
+      "id": 8
     }
   ]
 }

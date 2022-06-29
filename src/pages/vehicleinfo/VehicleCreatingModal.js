@@ -75,8 +75,8 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
             .matches('^[0-9]{2}[A-Z]{1}-[0-9]{4,5}$', 'Please enter truck plates(example: 00X-00000)'),
         trucktype: yup
             .string('Enter your truck type')
-            .required('Truck type is required')
-            .matches('^[a-zA-Z]+$', 'You must enter only text'),
+            .required('Truck type is required'),
+            // .matches('^[a-zA-Z]+$', 'You must enter only text'),
         price: yup
             .number()
             .typeError('You must enter number')

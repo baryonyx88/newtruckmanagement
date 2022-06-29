@@ -40,10 +40,11 @@ const Profile = () => {
     useEffect(() => {
         setData(users.items.items)
         // console.log(data)
-    }, [users])
+    }, [users.items])
 
-    const { firstName, lastName, email, password } = data ? data : {}
+    const { firstName, lastName, email, password } = data ? data : {firstName: 'Empty', lastName: 'Empty', email: 'Empty', password: 'Empty'}
     // console.log(data)
+    // console.log(users)
 
     const formik = useFormik({
         initialValues: {

@@ -74,8 +74,8 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
             .matches('^[0-9]{2}[A-Z]{1}-[0-9]{5}$', 'Please enter truck plates(example: 00X-00000)'),
         trucktype: yup
             .string('Enter your truck type')
-            .required('Truck type is required')
-            .matches('^[a-zA-Z]+$', 'You must enter only text'),
+            .required('Truck type is required'),
+            // .matches('^[a-zA-Z]+$', 'You must enter only text'),
         price: yup
             .number()
             .typeError('You must enter number')
@@ -135,8 +135,9 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
         enableReinitialize: true,
         onSubmit: (values) => {
             // console.log((values.productionyear.getFullYear()).toString())
-            const productionyear = values.productionyear.getFullYear()
-            console.log(values)
+            const productiondate = new Date(values.productionyear)
+            const productionyear = productiondate.getFullYear()
+            // console.log(productiondate)
             dispatch(editVehicleInfoRequest({
                 vehicleId: id,
                 truckplate: values.truckplate,
