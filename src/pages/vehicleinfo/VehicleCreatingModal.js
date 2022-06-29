@@ -343,6 +343,7 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                         value={formik.values.productionyear}
                                         onChange={handleDatePickerChange}
                                         renderInput={(params) => <TextField {...params}
+                                            fullWidth
                                             error={formik.touched.productionyear && Boolean(formik.errors.productionyear)}
                                             helperText={formik.touched.productionyear && formik.errors.productionyear}
                                         />}

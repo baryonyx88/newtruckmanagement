@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getVehicleInfoRequest, deleteVehicleInfoRequest } from '../../actions/vehicleinfo';
 import VehicleCreatingModal from './VehicleCreatingModal'
 import VehicleEditingModal from './VehicleEditingModal';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 
 const VehicleInfo = () => {
     const [openCreate, setOpenCreate] = React.useState(false);
@@ -31,20 +33,18 @@ const VehicleInfo = () => {
             headerName: 'Cargo Type',
             width: 200,
             renderCell: (params) => {
-                return params.value.map((item, index) => {
-                    return (
-                        <div key={index} style={{display: 'flex'}}>
-                            {item}&nbsp;
-                        </div>
-                    )
-                })
+                return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, margin: '10px' }}>
+                    {params.value.map((item, index) => (
+                        <Chip key={index} label={item} />
+                    ))}
+                </Box>
             }
         },
         {
             field: 'driver',
             headerName: 'Driver',
             width: 150,
-    
+
         },
         {
             field: 'truckType',
@@ -74,7 +74,18 @@ const VehicleInfo = () => {
         {
             field: 'status',
             headerName: 'Status',
-            width: 100,
+            width: 120,
+            renderCell: (params) => {
+                let color;
+                if (params.value == 'New') {
+                    color = 'primary'
+                } else if (params.value == 'In-used') {
+                    color = 'warning'
+                } else if (params.value == 'Suspended') {
+                    color = 'error'
+                }
+                return <Chip key={params.value} label={params.value} color={color} />
+            }
         },
         {
             field: 'desc',
@@ -120,7 +131,7 @@ const VehicleInfo = () => {
     return (
         <div>
             <Button onClick={handleCreatingModalOpen} variant="contained" style={{ marginBottom: '10px' }}>Create New</Button>
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 600, width: '100%' }}>
                 <DataGrid
                     rows={data ? data : []}
                     columns={columns}
@@ -129,8 +140,8 @@ const VehicleInfo = () => {
                     getRowHeight={() => 'auto'}
                 />
             </div>
-            <VehicleCreatingModal open={openCreate} handleClose={handleCreatingModalClose}/>
-            <VehicleEditingModal open={openEdit} handleClose={handleEditingModalClose} data={currentRow}/>
+            <VehicleCreatingModal open={openCreate} handleClose={handleCreatingModalClose} />
+            <VehicleEditingModal open={openEdit} handleClose={handleEditingModalClose} data={currentRow} />
         </div>
     );
 }

@@ -136,7 +136,9 @@
       "truckPlate": "30X-43213",
       "cargoType": [
         "Electronics",
-        "Books"
+        "Books",
+        "Vegetables",
+        "Fish"
       ],
       "driver": "Muoi Tam",
       "truckType": "6 tons",
@@ -194,7 +196,7 @@
       "dimension": "alc dkcldsc",
       "parking": "sdkajcnads",
       "production": "2026",
-      "status": "New",
+      "status": "Suspended",
       "desc": "asdcadcas",
       "id": 7
     },
