@@ -17,10 +17,20 @@ const Dashboard = () => {
     const [data, setData] = useState([])
     const [cargoData, setCargoData] = useState([])
 
+    const [endAngle, setEndAngle] = useState(0)
+
     useEffect(() => {
         dispatch(getVehicleInfoRequest())
         dispatch(getCargoTypesRequest())
+        setEndAngle(360)
     }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setEndAngle(360)
+        }, 100);
+    }, [])
+
 
     useEffect(() => {
         setCargoData(cargotypes.items.items)
@@ -32,7 +42,7 @@ const Dashboard = () => {
 
     // console.log(data)
     const dataChart = data ? data.map((item) => {
-        return { year: item.production, income: item.price }
+        return { year: item.production, income: parseFloat(item.price) }
     }) : []
     // console.log(dataChart)
 
@@ -75,7 +85,7 @@ const Dashboard = () => {
     return (
         <Box
             sx={{
-                // display: 'flex'
+                display: 'flex'
             }}
         >
             <Box
@@ -96,6 +106,7 @@ const Dashboard = () => {
                     // domainPadding will add space to each side of VictoryBar to
                     // prevent it from overlapping the axis
                     domainPadding={20}
+                    // startAngle={10}
                 >
                     <VictoryAxis
                         // tickValues specifies both the number of ticks and where
@@ -113,13 +124,38 @@ const Dashboard = () => {
                         data={dataChart}
                         x="year"
                         y="income"
+                        // barRatio={0.8}
+                        cornerRadius={5}
+                        style={{
+                            data: {
+                                fill: "#0674C4",
+                                width: 25
+                            }
+                        }}
+                        animate={{
+                            duration: 2000,
+                            onLoad: { duration: 1000 }
+                        }}
+                    // colorScale={['#00876c',
+                    // '#3d9b72',
+                    // '#63af77',
+                    // '#88c37c',
+                    // '#aed683',
+                    // '#d6e88c',
+                    // '#fffa97',
+                    // '#fedc7b',
+                    // '#fbbe65',
+                    // '#f79f57',
+                    // '#ef8050',
+                    // '#e35f4e',
+                    // '#d43d51']}
                     />
                 </VictoryChart>
             </Box>
             <Box
                 sx={{
-                    width: "50%",
-                    height: 500,
+                    width: "40%",
+                    height: 400,
                     backgroundColor: 'white',
                     padding: "10px",
                     paddingBottom: "40px",
@@ -131,7 +167,13 @@ const Dashboard = () => {
                     Cargo type chart
                 </Typography>
                 <VictoryPie
+                    animate={{
+                        duration: 1000,
+                        // easing: "bounceIn"
+                    }}
                     radius={({ datum, active }) => (active ? 150 : 120)}
+                    endAngle={endAngle}
+                    innerRadius={40}
                     events={[
                         {
                             target: "data",
@@ -163,7 +205,7 @@ const Dashboard = () => {
                         '#ef8050',
                         '#e35f4e',
                         '#d43d51']}
-                    
+
                     data={dataChartPie}
                 />
 
