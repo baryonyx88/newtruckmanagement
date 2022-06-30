@@ -9,6 +9,12 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 export const mainListItems = (
     <React.Fragment>
+        <ListItemButton href='dashboard'>
+            <ListItemIcon>
+                <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+        </ListItemButton>
         <ListItemButton href='usermanagement'>
             <ListItemIcon>
                 <PeopleIcon />

@@ -76,7 +76,7 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
         trucktype: yup
             .string('Enter your truck type')
             .required('Truck type is required'),
-            // .matches('^[a-zA-Z]+$', 'You must enter only text'),
+        // .matches('^[a-zA-Z]+$', 'You must enter only text'),
         price: yup
             .number()
             .typeError('You must enter number')
@@ -339,6 +339,8 @@ const VehicleCreatingModal = ({ open, handleClose }) => {
                                     <DatePicker
                                         inputFormat="yyyy"
                                         views={['year']}
+                                        minDate={new Date('2020-01-01')}
+                                        maxDate={new Date('2030-01-01')}
                                         label="Production Year"
                                         value={formik.values.productionyear}
                                         onChange={handleDatePickerChange}

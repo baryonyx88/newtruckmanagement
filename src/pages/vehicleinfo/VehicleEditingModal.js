@@ -343,6 +343,8 @@ const VehicleEditingModal = ({ open, handleClose, data }) => {
                                         inputFormat="yyyy"
                                         views={['year']}
                                         label="Production Year"
+                                        minDate={new Date('2020-01-01')}
+                                        maxDate={new Date('2030-01-01')}
                                         value={formik.values.productionyear}
                                         onChange={handleDatePickerChange}
                                         renderInput={(params) => <TextField {...params} 

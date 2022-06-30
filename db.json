@@ -72,6 +72,20 @@
       "email": "dtran123456@gmail.com",
       "password": "$2a$10$IAHdWdsIwRHJebBx1IAWz.rsrZ2bcyp97ut8Hm/b5Fn4NYL8GQqCu",
       "id": 14
+    },
+    {
+      "email": "tn3565@gmail.com",
+      "password": "$2a$10$ruS4aKZ/Za.Iabi.Tp1YaegMVE9.1ljxVRFQj3TQWwwMLM7p3skga",
+      "firstName": "Thang",
+      "lastName": "Nguyen",
+      "id": 15
+    },
+    {
+      "email": "ln3565@gmail.vom",
+      "password": "$2a$10$ENU4RkExBoIRFETZXEqInutrlM3UxUBSV4A6r63wZ.SOG7fUn2S4K",
+      "firstName": "Long",
+      "lastName": "Nguy",
+      "id": 16
     }
   ],
   "cargotypes": [
@@ -97,14 +111,6 @@
       "id": 6
     },
     {
-      "cargoName": "mm",
-      "id": 7
-    },
-    {
-      "cargoName": "ma",
-      "id": 8
-    },
-    {
       "cargoName": "Fish",
       "id": 9
     },
@@ -126,7 +132,7 @@
       "price": "12345",
       "dimension": "alc dkcldsc",
       "parking": "sdkajcnads",
-      "production": "2022",
+      "production": "2020",
       "status": "New",
       "desc": "asdcadcas",
       "id": 2
@@ -145,7 +151,7 @@
       "price": "1234567",
       "dimension": "alc dkcldsc",
       "parking": "sdkajcnads",
-      "production": "2013",
+      "production": "2021",
       "status": "In-used",
       "desc": "",
       "id": 3
@@ -159,10 +165,10 @@
       ],
       "driver": "Van Anh Duc Tran",
       "truckType": "100 tons",
-      "price": "10000000000",
+      "price": "1000000",
       "dimension": "alc dkcldsc",
       "parking": "sdkajcnads",
-      "production": "2013",
+      "production": "2022",
       "status": "In-used",
       "desc": "asdcadcas",
       "id": 4
@@ -171,14 +177,16 @@
       "vehicleId": 6,
       "truckPlate": "30X-12345",
       "cargoType": [
-        "Computer"
+        "Computer",
+        "Dark Chicken",
+        "Dog"
       ],
       "driver": "Nicky Gangster",
       "truckType": "Tran",
       "price": "123456",
       "dimension": "cnkajdncjkajsd",
       "parking": "sdkajcnads",
-      "production": "2022",
+      "production": "2023",
       "status": "New",
       "desc": "asdcadcas",
       "id": 6
@@ -195,7 +203,7 @@
       "price": "1234567",
       "dimension": "alc dkcldsc",
       "parking": "sdkajcnads",
-      "production": "2026",
+      "production": "2024",
       "status": "Suspended",
       "desc": "asdcadcas",
       "id": 7
@@ -212,7 +220,7 @@
       "price": "12345678",
       "dimension": "alc dkcldsc",
       "parking": "sdkajcnads",
-      "production": "2034",
+      "production": "2026",
       "status": "New",
       "desc": "cdslamcas",
       "id": 8

@@ -9,6 +9,7 @@ import UserManagement from '../pages/usermanagement/UserManagement';
 import Profile from '../pages/profile/Profile';
 import Layout from '../layouts/Layout';
 import { useSelector } from 'react-redux';
+import Dashboard from '../pages/dashboard/Dashboard';
 // import { RequireAuth } from '../components/RequireAuth';
 
 const Router = () => {
@@ -22,6 +23,7 @@ const Router = () => {
                         path="/"
                         element={<Home/>}
                     />
+                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="cargotype" element={<CargoTypeMaster />} />
                     <Route path="vehicleinfo" element={<VehicleInfo />} />
                     <Route path="usermanagement" element={<UserManagement />} />
